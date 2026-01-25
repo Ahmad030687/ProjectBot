@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Screenshot mein 20.x use ho rahi hai
+          node-version: '20'
 
       - name: Run Neural Sync
         run: node sync.js # Seedha script chalane ke liye
