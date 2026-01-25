@@ -16,7 +16,7 @@ async function runSync() {
         for (const round of rounds) {
             const issue = round.issueNumber;
             
-            // Firebase PUT request to save data
+            // Firebase PUT request to save data automatically
             const fbResponse = await fetch(`${FB_URL}/${issue}.json`, {
                 method: 'PUT',
                 body: JSON.stringify(round),
@@ -24,7 +24,7 @@ async function runSync() {
             });
 
             if (fbResponse.ok) {
-                console.log(`>>> ✅ SYNCED: Period ${issue} | Number: ${round.number}`);
+                console.log(`>>> ✅ SYNCED: Period ${issue} | Result: ${round.number}`);
             }
         }
         console.log(">>> 🔥 DATABASE UPDATED SUCCESSFULLY.");
