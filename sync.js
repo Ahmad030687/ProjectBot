@@ -3,15 +3,20 @@ const FB_URL = "https://admin-91a73-default-rtdb.firebaseio.com/history";
 
 async function runSync() {
     try {
-        console.log(">>> 🛰️ FETCHING DATA FROM API...");
+        console.log(">>> 🛰️  CONNECTING TO WINGO API...");
         const response = await fetch(`${API_URL}&t=${Date.now()}`);
+        
+        if (!response.ok) throw new Error(`API Status: ${response.status}`);
+        
         const result = await response.json();
         const rounds = result.data.list;
+
+        console.log(`>>> 📂 FOUND ${rounds.length} ROUNDS. SYNCING TO FIREBASE...`);
 
         for (const round of rounds) {
             const issue = round.issueNumber;
             
-            // Push to Firebase (PUT avoids duplicates)
+            // Firebase PUT request to save data
             const fbResponse = await fetch(`${FB_URL}/${issue}.json`, {
                 method: 'PUT',
                 body: JSON.stringify(round),
@@ -19,13 +24,13 @@ async function runSync() {
             });
 
             if (fbResponse.ok) {
-                console.log(`>>> ✅ LOGGED: Period ${issue}`);
+                console.log(`>>> ✅ SYNCED: Period ${issue} | Number: ${round.number}`);
             }
         }
-        console.log(">>> 🔥 FIREBASE SYNC COMPLETE.");
+        console.log(">>> 🔥 DATABASE UPDATED SUCCESSFULLY.");
     } catch (error) {
-        console.error(">>> ❌ ERROR:", error.message);
-        process.exit(1);
+        console.error(">>> ❌ CRITICAL ERROR:", error.message);
+        process.exit(1); // Task fail hone par GitHub ko signal dega
     }
 }
 
