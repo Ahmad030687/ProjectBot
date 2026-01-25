@@ -2,7 +2,7 @@ name: TRX Neural Sync
 on:
   schedule:
     - cron: '*/5 * * * *' # Har 5 minute baad auto-run
-  workflow_dispatch: # Manual button ke liye
+  workflow_dispatch: # Manual run button
 
 jobs:
   build:
@@ -17,4 +17,4 @@ jobs:
           node-version: '20'
 
       - name: Run Neural Sync
-        run: node sync.js # Seedha script chalane ke liye
+        run: node sync.js # No npm, direct execution
