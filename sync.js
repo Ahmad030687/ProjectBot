@@ -30,7 +30,7 @@ async function runSync() {
         console.log(">>> 🔥 DATABASE UPDATED SUCCESSFULLY.");
     } catch (error) {
         console.error(">>> ❌ CRITICAL ERROR:", error.message);
-        process.exit(1); // Task fail hone par GitHub ko signal dega
+        process.exit(1);
     }
 }
 
